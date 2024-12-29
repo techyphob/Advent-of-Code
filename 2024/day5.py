@@ -1,9 +1,14 @@
+# example = 143
+# line = 7074
+
 rules = []
 updates = []
 count = 0
 
+#input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day5-example.txt"
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day5.txt"
+
 def get_rule(value):
-    global rules
     return_list = []
     for r in rules:
         if r[0] == value:
@@ -19,12 +24,12 @@ def check_update(udate):
                 return 0
     return int(udate[len_u//2])
     
-with open("E:\OneDrive\Learning\Advent of Code\i5.txt", 'r') as input_file:
-    for line in input_file:
+with open(input_file, 'r') as inf:
+    for line in inf:
         if '|' in line:
-            rules += [list(map(int, line.rstrip().split("|")))]
+            rules.append(list(map(int, line.rstrip().split("|"))))
         elif ',' in line:
-            updates += [list(map(int,line.rstrip().split(",")))]
+            updates.append(list(map(int,line.rstrip().split(","))))
 
 for update in updates:
     count += check_update(update)

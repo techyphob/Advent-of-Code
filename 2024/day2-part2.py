@@ -1,4 +1,19 @@
+# example = 4
+# line = 
+
 errors = 0
+safe = 0
+report_list = []
+
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day2-example.txt"
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day2.txt"
+
+def diff_check(n):
+    for i in n:
+        if abs(i) > 3 or abs(i) < 1:
+            return False
+    return True
+
 def safe_test(n):
     global errors
     if errors > 1:
@@ -33,16 +48,25 @@ def safe_test(n):
                     return False
     return True
 
-safe = 0
+with open(input_file) as inf:
+    for line in inf:
+        report_list.append(list(map(int, line.split())))
 
-with open('2a.txt', 'r') as input_file:
-    for line in input_file:
-        errors = 0
-        number_list = list(map(int, line.split()))
-        if safe_test(number_list):
-            safe += 1
+for report in report_list:
+    if report == sorted(report) or report == sorted(report, reverse=True):
+        safe += diff_check([abs(x-y) for x,y in zip(report, report[1::])])
+
 print ('Safe:\t', safe)
 
+
+#692
+#698
+#716
+#705
+#687
+#694
+#697
+#704
 #692
 #698
 #697 ???

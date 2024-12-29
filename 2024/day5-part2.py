@@ -1,6 +1,12 @@
+# example = 123
+# line = 4828
+
 rules = []
 updates = []
 count = 0
+
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day5-example.txt"
+#input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day5.txt"
 
 def get_rule(value):
     global rules
@@ -28,13 +34,12 @@ def error_position(udate):
                 return i
     return -1
 
-
-with open("E:\OneDrive\Learning\Advent of Code\i5.txt", 'r') as input_file:
-    for line in input_file:
+with open(input_file, 'r') as inf:
+    for line in inf:
         if '|' in line:
-            rules += [list(map(int, line.rstrip().split("|")))]
+            rules.append(list(map(int, line.rstrip().split("|"))))
         elif ',' in line:
-            updates += [list(map(int,line.rstrip().split(",")))]
+            updates.append(list(map(int,line.rstrip().split(","))))
 
 for update in updates:
     check = error_position(update)

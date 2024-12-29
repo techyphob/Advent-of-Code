@@ -1,29 +1,31 @@
+# example = 48
+# line = 99532691
+
 import re
-a = []
+muls = []
+total = 0
+
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day3-part2-example.txt"
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day3.txt"
+
 def find_muls(my_string):
     return re.findall("mul\(\d{1,3},\d{1,3}\)", my_string)
 
-input_file = open('E:\OneDrive\Learning\Advent of Code\\3.txt', 'r')
-stuff = input_file.readlines()
-
+inf = open(input_file, 'r')
+stuff = inf.readlines()
 content = ''.join(stuff)
 
 do = content.find("do()")
 dont = content.find("don't()")
 
-a = find_muls(content[0:dont])
-print(do, dont, sep= "\t")
+muls += find_muls(content[0:dont])
 
 while dont > -1:
     do = content.find("do()",dont)
     dont = content.find("don't()",do)
-    a += find_muls(content[do:dont])
-    print(do, dont, sep= "\t")
+    muls += find_muls(content[do:dont])
 
-#a += find_muls(content[do::])
-
-total = 0
-for m in a:
+for m in muls:
     nums = re.findall('\d{1,3}', m)
     total += (int(nums[0]) * int(nums[1]))
 print (total)

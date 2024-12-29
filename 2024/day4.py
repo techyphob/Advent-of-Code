@@ -1,13 +1,18 @@
-#012
-#3x4
-#567
-
+# example = 18
+# line = 2578
 puzzle = []
 count = 0
+
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day4-example.txt"
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day4.txt"
+
 def check_letter(i, j, position, letter, step):
     global count
     global puzzle
-    
+
+#012
+#3x4
+#567    
     match position:
         case 0:
             if i-step >= 0 and j-step >= 0:
@@ -59,14 +64,13 @@ def check_letter(i, j, position, letter, step):
     else:
         return False
 
-
-with open("E:\OneDrive\Learning\Advent of Code\\4a.txt", 'r') as input_file:
-    for line in input_file:
+with open(input_file, 'r') as inf:
+    for line in inf:
         puzzle += line.rstrip().split()
 
 for i in range(len(puzzle)):
-    for j in range(len(puzzle[0])):  #assume puzzle is square
-        if puzzle[i][j] == 'X':         #i = row, j = col
+    for j in range(len(puzzle[i])):
+        if puzzle[i][j] == 'X':
             for n in range(8):
                 if check_letter(i, j, n, "M", 1):
                     if check_letter(i, j, n, "A", 2):
@@ -75,4 +79,3 @@ for i in range(len(puzzle)):
             
 
 print(count)
-

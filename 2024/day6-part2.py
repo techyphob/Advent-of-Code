@@ -1,7 +1,13 @@
+# example = 143
+# line = 7074
+
 #0 = north
 #1 = east
 #2 = south
 #3 = west
+
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6-example.txt"
+#input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6.txt"
 
 my_map = []
 direction = 0
@@ -41,13 +47,12 @@ def obstruction_check():
                         print(test_pos, test_direction)
                 #desire_vector = [current_pos[1],3]    
         test_direction = (test_direction+1)%4
-    
 
 def get_obstructions():
     global obs_list
     for i in range(rows):
         for j in range(columns):
-            if my_map[i][j] != '.':
+            if my_map[i][j] != '.' and my_map[i][j] != '^':
                 obs_list += [list([i,j])]
     
 def get_start_pos():
@@ -58,9 +63,9 @@ def get_start_pos():
                     my_map[i][j] = '.'
                     return [i,j]    
     
-with open("E:\OneDrive\Learning\Advent of Code\i6t.txt", 'r') as input_file:
-    for line in input_file:
-        my_map += [list(map(str,line.rstrip()))]
+with open(input_file, 'r') as inf:
+    for line in inf:
+        my_map.append(list(map(str,line.rstrip())))
 
 rows = len(my_map)
 columns = len(my_map[0])

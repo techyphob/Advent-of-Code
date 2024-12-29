@@ -1,7 +1,13 @@
+# example = 41
+# line = 4454
+
 #0 = north
 #1 = east
 #2 = south
 #3 = west
+
+#input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6-example.txt"
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6.txt"
 
 my_map = []
 count = 0
@@ -16,7 +22,7 @@ def get_start_pos():
         if '^' in my_map[i]:
             for j in range(columns):
                 if my_map[i][j] == '^':
-                    my_map[i][j] = '.'
+                    #my_map[i][j] = '.'
                     return [i,j]    
 
 def direction_change():
@@ -65,15 +71,14 @@ def move():
                 current_pos = [-1,-1]
 
     
-with open("E:\OneDrive\Learning\Advent of Code\i6.txt", 'r') as input_file:
-    for line in input_file:
-        my_map += [list(map(str,line.rstrip()))]
+with open(input_file, 'r') as inf:
+    for line in inf:
+        my_map.append(list(map(str,line.rstrip())))
 
 rows = len(my_map)
 columns = len(my_map[0])
 current_pos = get_start_pos()
 path.add(str(current_pos))
-
 
 while current_pos != [-1,-1]:
     count += 1
