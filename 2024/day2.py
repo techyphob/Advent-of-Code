@@ -1,5 +1,5 @@
 # example = 2
-# line = 680
+# live = 680
 
 safe = 0
 report_list = []

@@ -1,5 +1,5 @@
 # example = 48
-# line = 99532691
+# live = 99532691
 
 import re
 muls = []

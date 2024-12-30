@@ -1,5 +1,5 @@
 # example = 9
-# line = 1972
+# live = 1972
 puzzle = []
 count = 0
 

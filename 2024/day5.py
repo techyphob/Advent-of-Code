@@ -1,5 +1,5 @@
 # example = 143
-# line = 7074
+# live = 7074
 
 rules = []
 updates = []

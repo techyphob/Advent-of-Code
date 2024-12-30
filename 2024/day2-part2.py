@@ -1,5 +1,5 @@
 # example = 4
-# line = 
+# live = 
 
 errors = 0
 safe = 0
