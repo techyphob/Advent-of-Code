@@ -69,7 +69,6 @@ def move():
                     direction_change()
             else:
                 current_pos = [-1,-1]
-
     
 with open(input_file, 'r') as inf:
     for line in inf:
@@ -84,5 +83,4 @@ while current_pos != [-1,-1]:
     count += 1
     move()
     path.add(str(current_pos))
-
 print(len(path)-1)

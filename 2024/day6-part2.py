@@ -1,76 +1,157 @@
 # example = 6
 # live = 
 
-#0 = north
-#1 = east
-#2 = south
-#3 = west
+#input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6-example.txt"
+input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6.txt"
 
-input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6-example.txt"
-#input_file = "E:\\OneDrive\\Learning\\Advent of Code\\2024\\input\\day6.txt"
+class TestMap():
+    def __init__(self, layout):
+        self.__map = layout
+        self.__start_pos = []
+        self.__direction = 0
+        self.i = -1
+        self.j = -1
+        self.__obs = []
+        self.__obs_path = []
+        self.__space = []
+        self.__unique_moves = set()
+        self.__moves = 0
 
-my_map = []
-direction = 0
-rows = 0
-columns = 0
-start_pos = []
-current_pos = []
-obs_list = []
-obs_path = []
-obs_path_2 = []
-free_space = []
-new_possibles = set()
+        self.rows = len(layout)
+        self.cols = len(layout[0])
+        
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if self.__map[i][j] != '.' and self.__map[i][j] != '^':
+                    self.__obs.append([i,j])
+                elif self.__map[i][j] == '^':
+                    self.start_pos = [i, j]
+                    self.__space.append([i,j])
+                else:
+                    self.__space.append([i,j])
 
-
-def direction_change():
-    global direction
-    direction = (direction + 1)%4
-    move()
+    def get_current_pos(self):
+        return [self.i, self.j]
     
-def move(my_pos):    
-    i = my_pos[0]
-    j = my_pos[1]
-    match direction:
-        case 0:
-            if i-1 >= 0:
-                if my_map[i-1][j] != '#':
-                    current_pos = [i-1,j]
-                else:
-                    obs_path.append([[i-1,j], direction])
-                    obs_path_2.append([i-1,j])
-                    direction_change()
-            else:
-                current_pos = [-1,-1]
-        case 1:
-            if j+1 < columns:
-                if my_map[i][j+1] != '#':
-                    current_pos = [i,j+1]
-                else:
-                    obs_path.append([[i,j+1], direction])
-                    obs_path_2.append([i,j+1])
-                    direction_change()
-            else:
-                current_pos = [-1,-1]
-        case 2:
-            if i+1 < rows:
-                if my_map[i+1][j] != '#':
-                    current_pos = [i+1,j]
-                else:
-                    obs_path.append([[i+1,j], direction])
-                    obs_path_2.append([i+1,j])
-                    direction_change()
-            else:
-                current_pos = [-1,-1]
-        case 3:
-            if j-1 >= 0:
-                if my_map[i][j-1] != '#':
-                    current_pos = [i,j-1]
-                else:
-                    obs_path.append([[i,j-1], direction])
-                    obs_path_2.append([i,j-1])
-                    direction_change()
-            else:
-                current_pos = [-1,-1]
+    @property
+    def direction(self):
+        return self.__direction
+
+    @direction.setter
+    def direction(self):
+        self.__direction = 0
+
+    def direction_change(self):
+        self.__direction = (self.__direction + 1)%4
+        self.move()
+
+    @property
+    def obs_path(self):
+        return self.__obs_path
+
+    @property
+    def obs(self):
+            return self.__obs
+    
+    @obs.setter
+    def setter(self, my_obs):
+        self.__obs = my_obs
+
+    @property
+    def space(self):
+        return self.__space
+    
+    @space.setter
+    def space(self, my_space):
+        self.__space = my_space
+
+    @property
+    def start_pos(self):
+        return self.__start_pos
+    
+    @start_pos.setter
+    def start_pos(self, pos):
+        self.__start_pos = pos
+        self.i = pos[0]
+        self.j = pos[1]
+        self.__unique_moves.add(str(pos))
+
+    @property
+    def unique_moves(self):
+        return len(self.__unique_moves)
+    
+    @property
+    def moves(self):
+        return self.__moves
+    
+    @moves.setter
+    def setter(self, move_count):
+        self.__moves = move_count
+
+    def check_space(self, i, j):
+        return self.__map[i][j] != '#'
+    
+    def move(self):
+        #0 = north
+        #1 = east
+        #2 = south
+        #3 = west
+
+        if self.i == -1 and self.j == -1:
+            return False
+        else:
+            match self.__direction:
+                case 0:
+                    if self.i-1 >= 0:
+                        if self.check_space(self.i-1,self.j):
+                            self.i = self.i-1
+                        else:
+                            self.__obs_path.append([[self.i-1,self.j], self.direction])
+                            #obs_path_2.append([self.i-1,self.j])
+                            self.direction_change()
+                    else:
+                        self.i, self.j = (-1,-1)
+                case 1:
+                    if self.j+1 < self.cols:
+                        if self.check_space(self.i,self.j+1):
+                            self.j = self.j+1
+                        else:
+                            self.__obs_path.append([[self.i,self.j+1], self.direction])
+                            #obs_path_2.append([i,j+1])
+                            self.direction_change()
+                    else:
+                        self.i, self.j = (-1,-1)
+                case 2:
+                    if self.i+1 < self.rows:
+                        if self.check_space(self.i+1,self.j):
+                            self.i = self.i+1
+                        else:
+                            self.__obs_path.append([[self.i+1,self.j], self.direction])
+                            #obs_path_2.append([i+1,j])
+                            self.direction_change()
+                    else:
+                        self.i, self.j = (-1,-1)
+                case 3:
+                    if self.j-1 >= 0:
+                        if self.check_space(self.i,self.j-1):
+                            self.j = self.j-1
+                        else:
+                            self.__obs_path.append([[self.i,self.j-1], self.direction])
+                            #obs_path_2.append([i,j-1])
+                            self.direction_change()
+                    else:
+                        self.i, self.j = (-1,-1)
+            if self.i != -1:
+                self.__unique_moves.add(str([self.i,self.j]))
+                self.__moves += 1
+            return True
+
+    def reset(self, new_pos, new_driection):
+        self.__moves = 0
+        self.__direction = new_driection
+        self.__unique_moves = set()
+        self.start_pos = new_pos
+
 
 def check_square(pos1, pos2, pos3, direction, i):
     match direction:
@@ -152,52 +233,28 @@ def obstruction_check(pos1, pos2, direction, path_index):
                 if my_pos in obs_list:
                     return obs_to_path_check(my_pos, direction, path_index)
             return True
-        
-def get_obstructions():
-    for i in range(rows):
-        for j in range(columns):
-            if my_map[i][j] != '.' and my_map[i][j] != '^':
-                obs_list.append([i,j])
-            else:
-                free_space.append([i,j])
 
-def get_start_pos():
-    for i in range(rows):
-        if '^' in my_map[i]:
-            for j in range(columns):
-                if my_map[i][j] == '^':
-                    my_map[i][j] = '.'
-                    return [i,j]    
-
+start_map = []
 with open(input_file, 'r') as inf:
     for line in inf:
-        my_map.append(list(map(str,line.rstrip())))
+        start_map.append(list(map(str,line.rstrip())))
 
-rows = len(my_map)
-columns = len(my_map[0])
-current_pos = get_start_pos()
-start_pos = current_pos
-get_obstructions()
+a_map = TestMap(start_map)
 
-while current_pos != [-1,-1]:
-    move(current_pos)
+print("Obstructions:\t\t{0}\nFree Space:\t\t{1}\nStart Position:\t\t{2}\nStart Direction:\t{3}".format(len(a_map.obs),len(a_map.space),a_map.start_pos, a_map.direction))
+while a_map.move():
+    pass    
+print("Unique Positions:\t{0}\nMoves:\t\t\t{1}\nObs Encountered:\t{2}".format(a_map.unique_moves, a_map.moves,len(a_map.obs_path),))
+#print(a_map.obs_path)
+#print([x[0] for x in a_map.obs_path])
 
-print("Obstructions:\t{0}\nEncountered:\t{1}\nFree Space:\t{2}".format(len(obs_list),len(obs_path),len(free_space)))
-
-#
 #   Test if a square can be create for every three obstructions returning the guard to the same path
 #   Then test if guard gets to square position without encountering an obstruction,
 #   that there are no other obstructions on the path back to the first
 #
-count = 0
-for i in range(len(obs_path)-2):
-    new_possibles.add(str(check_square(obs_path[i][0],obs_path[i+1][0],obs_path[i+2][0], obs_path[i][1], i+2)))
-
-new_possibles.remove("[-1, -1]")
-print(len(new_possibles))
-
-
-
-
-
-
+#count = 0
+#for i in range(len(obs_path)-2):
+#    new_possibles.add(str(check_square(obs_path[i][0],obs_path[i+1][0],obs_path[i+2][0], obs_path[i][1], i+2)))##
+#
+#new_possibles.remove("[-1, -1]")
+#print(len(new_possibles))
