@@ -19,7 +19,7 @@ def create_file_map(fs):
         else:
             for j in range(int(fs[i])):
                 my_map.append(('.'))
-        is_file = not(is_file)    
+        is_file = not(is_file)
     return my_map
     
 def compact_filesystem(fs_map):
