@@ -7,7 +7,7 @@ from collections import Counter
 from math import prod
 
 YEAR = '2024'
-example = False
+example = True
 map_type = str
 day = 14
 if example:
@@ -51,6 +51,7 @@ for l in input:
     robots.append(robot(split_line(pv[0]), split_line(pv[1])))
 
 for r in robots:
+    print(r.velocity)
     r.patrol(100)
     quads.append(r.in_quadrant())
 
