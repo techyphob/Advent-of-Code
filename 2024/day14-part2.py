@@ -52,7 +52,7 @@ def print_map(num, r_positions):
                 grid += "."
         grid += "\n"
     if 'R'*8 in grid:
-        with open('E:\\OneDrive\\Learning\\Temp\\' + str(num) + '.txt', 'w') as outf:
+        with open(str(num) + '.txt', 'w') as outf:
             outf.writelines(grid)
 
 robots = []
